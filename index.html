@@ -5,46 +5,98 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Attendance Calculator</title>
   <style>
-    body {
-      font-family: Arial, sans-serif;
-      text-align: center;
-      padding: 30px;
-      background: #f0f4f8;
+    :root {
+      --primary: #4f46e5;
+      --secondary: #3b82f6;
+      --background: #f9fafb;
+      --card-bg: #ffffff;
+      --text: #1f2937;
     }
-    h1 { color: #333; }
-    input, button {
-      padding: 10px;
-      width: 80%;
+
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background-color: var(--background);
+      margin: 0;
+      padding: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 100vh;
+    }
+
+    .container {
+      background: var(--card-bg);
+      padding: 30px;
+      border-radius: 12px;
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
+      width: 90%;
+      max-width: 400px;
+      text-align: center;
+      animation: fadeIn 0.8s ease;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(-10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    h1 {
+      color: var(--primary);
+      font-size: 1.8rem;
+      margin-bottom: 20px;
+    }
+
+    input {
+      width: 100%;
+      padding: 12px;
       margin: 10px 0;
+      border: 1px solid #ddd;
+      border-radius: 8px;
       font-size: 1rem;
     }
+
     button {
-      background: #4CAF50;
+      width: 100%;
+      padding: 12px;
+      background: var(--primary);
       color: white;
       border: none;
+      border-radius: 8px;
+      font-size: 1rem;
       cursor: pointer;
+      transition: background 0.3s ease;
     }
+
     button:hover {
-      background: #45a049;
+      background: var(--secondary);
     }
+
     .result {
       margin-top: 20px;
       padding: 15px;
-      background: #fff;
+      background: #f3f4f6;
       border-radius: 8px;
-      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+      font-size: 1rem;
+      color: var(--text);
+    }
+
+    footer {
+      margin-top: 30px;
+      font-size: 0.85rem;
+      color: #6b7280;
     }
   </style>
 </head>
 <body>
-  <h1>Attendance Calculator</h1>
-  <input type="number" id="totalClasses" placeholder="Total Classes Held" />
-  <input type="number" id="attendedClasses" placeholder="Classes Attended" />
-  <input type="number" id="expectedPercentage" placeholder="Expected Attendance (%) (default 75)" />
-
-  <button onclick="calculateAttendance()">Calculate</button>
-
-  <div class="result" id="result">Your result will appear here...</div>
+  <div class="container">
+    <h1>Attendance Calculator</h1>
+    <input type="number" id="totalClasses" placeholder="Total Classes Held" />
+    <input type="number" id="attendedClasses" placeholder="Classes Attended" />
+    <input type="number" id="expectedPercentage" placeholder="Target Attendance (%) (default 75)" />
+    <button onclick="calculateAttendance()">Calculate</button>
+    <div class="result" id="result">Your result will appear here...</div>
+    <footer>Made with ❤️ by You</footer>
+  </div>
 
   <script>
     function calculateAttendance() {
@@ -57,12 +109,12 @@
 
       const resultDiv = document.getElementById("result");
       if (isNaN(totalClasses) || isNaN(attendedClasses) || totalClasses <= 0 || attendedClasses < 0 || attendedClasses > totalClasses) {
-        resultDiv.innerHTML = "Please enter valid class numbers.";
+        resultDiv.innerHTML = "⚠️ Please enter valid class numbers.";
         return;
       }
 
       const currentAttendance = (attendedClasses / totalClasses) * 100;
-      let message = `<strong>Your current attendance:</strong> ${currentAttendance.toFixed(2)}%<br/>`;
+      let message = `<strong>Your current attendance:</strong> ${currentAttendance.toFixed(2)}%<br/><br/>`;
 
       const targetFraction = expectedPercentage / 100;
 
