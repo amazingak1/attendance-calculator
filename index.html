@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Attendance Calculator</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      text-align: center;
+      padding: 30px;
+      background: #f0f4f8;
+    }
+    h1 { color: #333; }
+    input, button {
+      padding: 10px;
+      width: 80%;
+      margin: 10px 0;
+      font-size: 1rem;
+    }
+    button {
+      background: #4CAF50;
+      color: white;
+      border: none;
+      cursor: pointer;
+    }
+    button:hover {
+      background: #45a049;
+    }
+    .result {
+      margin-top: 20px;
+      padding: 15px;
+      background: #fff;
+      border-radius: 8px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    }
+  </style>
+</head>
+<body>
+  <h1>Attendance Calculator</h1>
+  <input type="number" id="totalClasses" placeholder="Total Classes Held" />
+  <input type="number" id="attendedClasses" placeholder="Classes Attended" />
+  <input type="number" id="expectedPercentage" placeholder="Expected Attendance (%) (default 75)" />
+
+  <button onclick="calculateAttendance()">Calculate</button>
+
+  <div class="result" id="result">Your result will appear here...</div>
+
+  <script>
+    function calculateAttendance() {
+      const totalClasses = parseFloat(document.getElementById("totalClasses").value);
+      const attendedClasses = parseFloat(document.getElementById("attendedClasses").value);
+      let expectedPercentage = parseFloat(document.getElementById("expectedPercentage").value);
+      if (isNaN(expectedPercentage) || expectedPercentage <= 0 || expectedPercentage > 100) {
+        expectedPercentage = 75.0;
+      }
+
+      const resultDiv = document.getElementById("result");
+      if (isNaN(totalClasses) || isNaN(attendedClasses) || totalClasses <= 0 || attendedClasses < 0 || attendedClasses > totalClasses) {
+        resultDiv.innerHTML = "Please enter valid class numbers.";
+        return;
+      }
+
+      const currentAttendance = (attendedClasses / totalClasses) * 100;
+      let message = `<strong>Your current attendance:</strong> ${currentAttendance.toFixed(2)}%<br/>`;
+
+      const targetFraction = expectedPercentage / 100;
+
+      if (currentAttendance >= expectedPercentage) {
+        const maxMissable = Math.floor((attendedClasses - targetFraction * totalClasses) / targetFraction);
+        message += `🎉 You can miss <strong>${maxMissable}</strong> more class${maxMissable !== 1 ? "es" : ""} and still maintain at least ${expectedPercentage}% attendance.`;
+      } else {
+        const required = Math.ceil((targetFraction * totalClasses - attendedClasses) / (1 - targetFraction));
+        message += `⚠️ You need to attend the next <strong>${required}</strong> class${required !== 1 ? "es" : ""} to reach ${expectedPercentage}% attendance.`;
+      }
+
+      resultDiv.innerHTML = message;
+    }
+  </script>
+</body>
+</html>
