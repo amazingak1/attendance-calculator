@@ -184,10 +184,28 @@
   </div>
 
   <script>
+    // const toggle = document.getElementById('darkModeToggle');
+    // toggle.addEventListener('change', () => {
+    //   document.body.classList.toggle('dark', toggle.checked);
+    // });
     const toggle = document.getElementById('darkModeToggle');
-    toggle.addEventListener('change', () => {
-      document.body.classList.toggle('dark', toggle.checked);
-    });
+
+  // Load saved preference
+  if (localStorage.getItem('darkMode') === 'true') {
+    document.body.classList.add('dark');
+    toggle.checked = true;
+  }
+
+toggle.addEventListener('change', () => {
+  if (toggle.checked) {
+    document.body.classList.add('dark');
+    localStorage.setItem('darkMode', 'true');
+  } else {
+    document.body.classList.remove('dark');
+    localStorage.setItem('darkMode', 'false');
+  }
+});
+
 
     function calculateAttendance() {
       const totalClasses = parseFloat(document.getElementById("totalClasses").value);
