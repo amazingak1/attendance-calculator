@@ -35,10 +35,6 @@ Simply open the `index.html` file in your web browser. No server or backend setu
 - CSS3 (with CSS variables and animations)
 - JavaScript (vanilla)
 
-## License
-
-This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for details.
-
 ## Author
 
 Made by Arpit
