@@ -44,4 +44,9 @@ function calculateAttendance() {
   }
 
   resultDiv.innerHTML = message;
+
+  // Trigger animation
+  resultDiv.classList.remove('pop');
+  void resultDiv.offsetWidth; // Trick to restart the animation
+  resultDiv.classList.add('pop');
 }
