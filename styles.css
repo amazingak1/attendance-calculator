@@ -10,6 +10,10 @@ body {
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
   background-color: var(--background);
   margin: 0;
+  
+  opacity: 0;
+  animation: bodyFade 0.8s ease forwards;
+  
   padding: 0;
   display: flex;
   align-items: center;
@@ -17,6 +21,10 @@ body {
   min-height: 100vh;
   transition: background-color 0.3s ease, color 0.3s ease;
   color: var(--text);
+}
+
+@keyframes bodyFade {
+  to { opacity: 1; }
 }
 
 body.dark {
@@ -66,7 +74,10 @@ input {
 }
 
 input:focus {
-  outline: 2px solid var(--secondary);
+  outline: none;
+  border-color: var(--secondary);
+  box-shadow: 0 0 8px var(--secondary);
+  transform: scale(1.02);
 }
 
 button {
@@ -78,12 +89,15 @@ button {
   border-radius: 8px;
   font-size: 1rem;
   cursor: pointer;
-  transition: background 0.3s ease;
+/*   transition: background 0.3s ease; */
   margin-top: 10px;
+  transition: background 0.3s ease, transform 0.2s ease;
 }
 
 button:hover {
   background: var(--secondary);
+  transform: translateY(-2px) scale(1.02);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
 }
 
 .portal-button {
@@ -98,7 +112,7 @@ button:hover {
   font-size: 1rem;
 }
 
-.result {
+/* .result {
   margin-top: 20px;
   padding: 15px;
   background: #f3f4f6;
@@ -106,6 +120,16 @@ button:hover {
   font-size: 1rem;
   color: var(--text);
   transition: background-color 0.3s ease, color 0.3s ease;
+} */
+
+.result {
+  animation: pop 0.4s ease;
+}
+
+@keyframes pop {
+  0% { transform: scale(0.9); opacity: 0.7; }
+  50% { transform: scale(1.05); opacity: 1; }
+  100% { transform: scale(1); }
 }
 
 body.dark .result {
@@ -160,7 +184,8 @@ body.dark footer {
   bottom: 2px;
   background-color: white;
   border-radius: 50%;
-  transition: 0.4s;
+/*   transition: 0.4s; */
+  transition: transform 0.4s ease, background-color 0.4s ease;
 }
 
 input:checked + .slider {
