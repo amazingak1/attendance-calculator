@@ -124,10 +124,10 @@
 
       if (currentAttendance >= expectedPercentage) {
         const maxMissable = Math.floor((attendedClasses - targetFraction * totalClasses) / targetFraction);
-        message += `🎉 You can miss <strong>${maxMissable}</strong> more class${maxMissable !== 1 ? "es" : ""} and still maintain at least ${expectedPercentage}% attendance.`;
+        message += `🎉 You can miss <strong>${maxMissable}</strong> more class${maxMissable !== 1 ? "es" : ""} and still maintain at least <strong>${expectedPercentage}%</strong> attendance.`;
       } else {
         const required = Math.ceil((targetFraction * totalClasses - attendedClasses) / (1 - targetFraction));
-        message += `⚠️ You need to attend the next <strong>${required}</strong> class${required !== 1 ? "es" : ""} to reach ${expectedPercentage}% attendance.`;
+        message += `⚠️ You need to attend the next <strong>${required}</strong> class${required !== 1 ? "es" : ""} to reach <strong>${expectedPercentage}%</strong> attendance.`;
       }
 
       resultDiv.innerHTML = message;
