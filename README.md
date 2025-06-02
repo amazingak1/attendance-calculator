@@ -37,7 +37,7 @@ Simply open the `index.html` file in your web browser. No server or backend setu
 
 ## Author
 
-Made by ChatGPT Arpit
+Made by ChatGPT and Arpit
 
 ---
 
