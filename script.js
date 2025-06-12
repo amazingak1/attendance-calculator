@@ -1,13 +1,20 @@
-document.getElementById("calculateBtn").addEventListener("click", calculateAttendance);
-document.getElementById("portalBtn").addEventListener("click", () => {
-  window.open('https://tech.kiet.edu/StudentPortal/#/dashboard', '_blank');
-});
-document.getElementById("darkModeToggle").addEventListener("click", toggleDarkMode);
+const toggle = document.getElementById('darkModeToggle');
 
-// Load dark mode preference
-if (localStorage.getItem("darkMode") === "enabled") {
-  document.body.classList.add("dark");
+// Load saved preference
+if (localStorage.getItem('darkMode') === 'true') {
+  document.body.classList.add('dark');
+  toggle.checked = true;
 }
+
+toggle.addEventListener('change', () => {
+  if (toggle.checked) {
+    document.body.classList.add('dark');
+    localStorage.setItem('darkMode', 'true');
+  } else {
+    document.body.classList.remove('dark');
+    localStorage.setItem('darkMode', 'false');
+  }
+});
 
 function calculateAttendance() {
   const totalClasses = parseFloat(document.getElementById("totalClasses").value);
@@ -18,11 +25,8 @@ function calculateAttendance() {
   }
 
   const resultDiv = document.getElementById("result");
-  resultDiv.classList.remove("show");
-
   if (isNaN(totalClasses) || isNaN(attendedClasses) || totalClasses <= 0 || attendedClasses < 0 || attendedClasses > totalClasses) {
     resultDiv.innerHTML = "⚠️ Please enter valid class numbers.";
-    setTimeout(() => resultDiv.classList.add("show"), 50);
     return;
   }
 
@@ -40,14 +44,9 @@ function calculateAttendance() {
   }
 
   resultDiv.innerHTML = message;
-  setTimeout(() => resultDiv.classList.add("show"), 50);
-}
 
-function toggleDarkMode() {
-  document.body.classList.toggle("dark");
-  if (document.body.classList.contains("dark")) {
-    localStorage.setItem("darkMode", "enabled");
-  } else {
-    localStorage.setItem("darkMode", "disabled");
-  }
+  // Trigger animation
+  resultDiv.classList.remove('pop');
+  void resultDiv.offsetWidth; // Trick to restart the animation
+  resultDiv.classList.add('pop');
 }
